@@ -1,4 +1,4 @@
-# js_l1_brain_games-12
+# Project lvl2 Differ
 
 [![Code Climate](https://codeclimate.com/github/lazycoder9/project-lvl2-s13/badges/gpa.svg)](https://codeclimate.com/github/lazycoder9/project-lvl2-s13)
 
