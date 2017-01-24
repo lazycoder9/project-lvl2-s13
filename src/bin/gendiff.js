@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import program from 'commander';
-import differ from '../differ';
+import differ from '../../';
 
 let conf1;
 let conf2;
@@ -16,4 +16,4 @@ program
   .option('-f, --format [type]', 'Output format')
   .parse(process.argv);
 
-console.log(differ(conf1, conf2));
+console.log(differ.json(conf1, conf2));

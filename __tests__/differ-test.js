@@ -1,5 +1,5 @@
 import fs from 'fs';
-import differ from '../src/differ';
+import differ from '../';
 
 test('differ', () => {
   const config1 = fs.readFileSync('__tests__/__fixtures__/1.json', 'utf-8');

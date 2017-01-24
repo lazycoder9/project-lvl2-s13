@@ -58,7 +58,7 @@ const toString = (diffObject) => {
   return result;
 };
 
-const jsonDiffer = (config1, config2) => {
+export default (config1, config2) => {
   const obj1 = JSON.parse(config1);
   const obj2 = JSON.parse(config2);
   const diff = {};
@@ -70,8 +70,4 @@ const jsonDiffer = (config1, config2) => {
   });
 
   return toString(diff);
-};
-
-export default {
-  json: jsonDiffer,
 };
