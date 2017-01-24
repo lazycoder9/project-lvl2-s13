@@ -3,3 +3,4 @@
 /tmp
 /dist
 /src/bin/*.json
+/cm/*.retry
