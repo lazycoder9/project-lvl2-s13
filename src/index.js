@@ -8,5 +8,5 @@ export default (config1, config2) => {
   const obj1 = fs.readFileSync(`${config1}`, 'utf-8');
   const obj2 = fs.readFileSync(`${config2}`, 'utf-8');
 
-  return differ(...parser(obj1, obj2, type));
+  return differ(...parser[type](obj1, obj2));
 };
