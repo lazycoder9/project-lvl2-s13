@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+import fs from 'fs';
 import program from 'commander';
-import differ from '../../';
+import differ from '../';
 
 let conf1;
 let conf2;
@@ -16,4 +17,12 @@ program
   .option('-f, --format [type]', 'Output format')
   .parse(process.argv);
 
-console.log(differ.json(conf1, conf2));
+const config1 = fs.readFileSync(`${conf1}`, 'utf-8');
+const config2 = fs.readFileSync(`${conf2}`, 'utf-8');
+
+const type = conf1.split('.')[1];
+switch (type) {
+  case 'json': console.log(differ.json(config1, config2)); break;
+  case 'yml': console.log(differ.yaml(config1, config2)); break;
+  default: console.log('Unsupported file type'); break;
+}

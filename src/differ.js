@@ -1,3 +1,6 @@
+import yaml from 'js-yaml';
+import chalk from 'chalk';
+
 const compareValues = (value1, value2) => {
   if (value1 === value2) {
     return {
@@ -58,11 +61,8 @@ const toString = (diffObject) => {
   return result;
 };
 
-export default (config1, config2) => {
-  const obj1 = JSON.parse(config1);
-  const obj2 = JSON.parse(config2);
+const mainDiffer = (obj1, obj2) => {
   const diff = {};
-
   const keys = uniqueKeys(obj1, obj2);
 
   keys.forEach(function (key) {
@@ -70,4 +70,18 @@ export default (config1, config2) => {
   });
 
   return toString(diff);
+};
+
+export const jsonDiffer = (config1, config2) => {
+  const obj1 = JSON.parse(config1);
+  const obj2 = JSON.parse(config2);
+
+  return mainDiffer(obj1, obj2);
+};
+
+export const yamlDiffer = (config1, config2) => {
+  const obj1 = yaml.safeLoad(config1);
+  const obj2 = yaml.safeLoad(config2);
+
+  return mainDiffer(obj1, obj2);
 };
