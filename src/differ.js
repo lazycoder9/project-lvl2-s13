@@ -62,7 +62,7 @@ export const toString = (diffObject) => {
   return result;
 };
 
-const mainDiffer = (obj1, obj2) => {
+export default (obj1, obj2) => {
   const diff = {};
   const keys = uniqueKeys(obj1, obj2);
 
@@ -71,25 +71,4 @@ const mainDiffer = (obj1, obj2) => {
   });
 
   return toString(diff);
-};
-
-export const jsonDiffer = (config1, config2) => {
-  const obj1 = JSON.parse(config1);
-  const obj2 = JSON.parse(config2);
-
-  return mainDiffer(obj1, obj2);
-};
-
-export const yamlDiffer = (config1, config2) => {
-  const obj1 = yaml.safeLoad(config1);
-  const obj2 = yaml.safeLoad(config2);
-
-  return mainDiffer(obj1, obj2);
-};
-
-export const iniDiffer = (config1, config2) => {
-  const obj1 = ini.parse(config1);
-  const obj2 = ini.parse(config2);
-
-  return mainDiffer(obj1, obj2);
 };
