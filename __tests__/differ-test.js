@@ -2,8 +2,10 @@ import fs from 'fs';
 import differ from '../src';
 
 test('JSON Differ', () => {
-  const config1 = fs.readFileSync('__tests__/fixtures/1.json', 'utf-8');
-  const config2 = fs.readFileSync('__tests__/fixtures/2.json', 'utf-8');
+  const config1 = '__tests__/fixtures/1.json';
+  const config2 = '__tests__/fixtures/2.json';
+
+  const actual = differ.getDiff(config1, config2);
 
   const expected = `{
     host: hexlet.io
@@ -12,12 +14,12 @@ test('JSON Differ', () => {
   - proxy: 123.234.53.22
   + verbose: true
 }`;
-  expect(differ.json(config1, config2)).toBe(expected);
+  expect(differ.toString(actual)).toBe(expected);
 });
 
 test('YAML Differ', () => {
-  const config1 = fs.readFileSync('__tests__/fixtures/1.yml', 'utf-8');
-  const config2 = fs.readFileSync('__tests__/fixtures/2.yml', 'utf-8');
+  const config1 = '__tests__/fixtures/1.yml';
+  const config2 = '__tests__/fixtures/2.yml';
 
   const expected = `{
     host: hexlet.io
@@ -26,12 +28,16 @@ test('YAML Differ', () => {
   - proxy: 123.234.53.22
   + verbose: true
 }`;
-  expect(differ.yaml(config1, config2)).toBe(expected);
+
+  const actual = differ.getDiff(config1, config2);
+  expect(differ.toString(actual)).toBe(expected);
 });
 
 test('INI Differ', () => {
-  const config1 = fs.readFileSync('__tests__/fixtures/1.ini', 'utf-8');
-  const config2 = fs.readFileSync('__tests__/fixtures/2.ini', 'utf-8');
+  const config1 = '__tests__/fixtures/1.ini';
+  const config2 = '__tests__/fixtures/2.ini';
+
+  const actual = differ.getDiff(config1, config2);
 
   const expected = `{
     host: hexlet.io
@@ -40,5 +46,5 @@ test('INI Differ', () => {
   - proxy: 123.234.53.22
   + verbose: true
 }`;
-  expect(differ.ini(config1, config2)).toBe(expected);
+  expect(differ.toString(actual)).toBe(expected);
 });
