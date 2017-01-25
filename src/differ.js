@@ -1,7 +1,3 @@
-import yaml from 'js-yaml';
-import ini from 'ini';
-import chalk from 'chalk';
-
 const compareValues = (value1, value2) => {
   if (value1 === value2) {
     return {
