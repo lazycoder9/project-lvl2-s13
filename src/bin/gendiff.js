@@ -7,8 +7,7 @@ program
   .description('Compares two configuration files and shows a difference.')
   .arguments('<first_config> <second_config>')
   .action(function (firstConfig, secondConfig) {
-    const diff = differ.getDiff(firstConfig, secondConfig);
-    console.log(differ.toString(diff));
+    console.log(differ(firstConfig, secondConfig));
   })
   .option('-f, --format [type]', 'Output format')
   .parse(process.argv);

@@ -70,7 +70,7 @@ const mainDiffer = (obj1, obj2) => {
     diff[key] = compareValues(obj1[key], obj2[key]);
   });
 
-  return diff;
+  return toString(diff);
 };
 
 export const jsonDiffer = (config1, config2) => {

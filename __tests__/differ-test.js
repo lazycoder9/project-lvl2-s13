@@ -5,7 +5,7 @@ test('JSON Differ', () => {
   const config1 = '__tests__/fixtures/1.json';
   const config2 = '__tests__/fixtures/2.json';
 
-  const actual = differ.getDiff(config1, config2);
+  const actual = differ(config1, config2);
 
   const expected = `{
     host: hexlet.io
@@ -14,7 +14,7 @@ test('JSON Differ', () => {
   - proxy: 123.234.53.22
   + verbose: true
 }`;
-  expect(differ.toString(actual)).toBe(expected);
+  expect(actual).toBe(expected);
 });
 
 test('YAML Differ', () => {
@@ -29,15 +29,15 @@ test('YAML Differ', () => {
   + verbose: true
 }`;
 
-  const actual = differ.getDiff(config1, config2);
-  expect(differ.toString(actual)).toBe(expected);
+  const actual = differ(config1, config2);
+  expect(actual).toBe(expected);
 });
 
 test('INI Differ', () => {
   const config1 = '__tests__/fixtures/1.ini';
   const config2 = '__tests__/fixtures/2.ini';
 
-  const actual = differ.getDiff(config1, config2);
+  const actual = differ(config1, config2);
 
   const expected = `{
     host: hexlet.io
@@ -46,5 +46,5 @@ test('INI Differ', () => {
   - proxy: 123.234.53.22
   + verbose: true
 }`;
-  expect(differ.toString(actual)).toBe(expected);
+  expect(actual).toBe(expected);
 });
