@@ -1,9 +1,7 @@
-import jsonParser from './jsonParser';
-import yamlParser from './yamlParser';
-import iniParser from './iniParser';
+import json from './jsonParser';
+import yml from './yamlParser';
+import ini from './iniParser';
 
-export default {
-  '.json': (obj) => jsonParser(obj),
-  '.yml': (obj) => yamlParser(obj),
-  '.ini': (obj) => iniParser(obj),
-};
+const parsers = { json, yml, ini };
+
+export default extension => parsers[extension];
