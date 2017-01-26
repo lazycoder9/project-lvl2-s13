@@ -1,12 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import parser from './parsers/index';
+import formatter from './formatters/index';
 import differ from './differ';
 
-export default (config1, config2) => {
+export default (config1, config2, format = 'obj') => {
   const type = path.extname(`${config1}`).replace(/\./g, '');
   const obj1 = fs.readFileSync(`${config1}`, 'utf-8');
   const obj2 = fs.readFileSync(`${config2}`, 'utf-8');
-
-  return differ(parser(type)(obj1), parser(type)(obj2));
+  const diff = differ(parser(type)(obj1), parser(type)(obj2));
+  return formatter(format)(diff);
 };

@@ -16,6 +16,9 @@ build:
 	rm -rf dist
 	npm run build
 
+run:
+	babel-node src\bin\gendiff.js __tests__\fixtures\1.json __tests__\fixtures\2.json
+
 test:
 	npm test
 
