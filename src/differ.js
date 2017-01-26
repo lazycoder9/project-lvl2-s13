@@ -1,43 +1,14 @@
-const compareValues = (value1, value2) => {
-  if (value1 === value2) {
-    return {
-      type: 'unchanged',
-      data: value1,
-    };
+const objToString = (obj) => {
+  let result = '{\n';
+  for (let key in obj) {
+    result += `        "${key}": "${obj[key]}"`;
   }
-  if (value1 === undefined) {
-    return {
-      type: 'created',
-      data: value2,
-    };
-  }
-  if (value2 === undefined) {
-    return {
-      type: 'deleted',
-      data: value1,
-    };
-  }
+  result += '\n    }';
 
-  return {
-    type: 'updated',
-    data: [value2, value1],
-  };
-};
+  return result;
+}
 
-const uniqueKeys = (obj1, obj2) => {
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-
-  keys2.reduce((acc, key) => {
-    if (!keys1.includes(key)) {
-      acc.push(key);
-    }
-
-    return acc;
-  }, keys1);
-
-  return keys1;
-};
+const addTab = string => string.split('\n').map(e => `    ${e}`).join('\n').trim();
 
 export const toString = (diffObject) => {
   const keys = Object.keys(diffObject);
@@ -45,6 +16,7 @@ export const toString = (diffObject) => {
 
   keys.forEach(function (key) {
     switch (diffObject[key].type) {
+      case 'object': result += `\n    ${key}: ${addTab(diffObject[key].data)}`; break;
       case 'unchanged': result += `\n    ${key}: ${diffObject[key].data}`; break;
       case 'updated': result += `\n  + ${key}: ${diffObject[key].data[0]}\n  - ${key}: ${diffObject[key].data[1]}`; break;
       case 'created': result += `\n  + ${key}: ${diffObject[key].data}`; break;
@@ -58,13 +30,47 @@ export const toString = (diffObject) => {
   return result;
 };
 
-export default (obj1, obj2) => {
+const differ = (obj1, obj2) => {
   const diff = {};
-  const keys = uniqueKeys(obj1, obj2);
-
-  keys.forEach(function (key) {
+  for (let key in obj1) {
+    const value2 = obj2 === undefined ? undefined : obj2[key];
+    diff[key] = compareValues(obj1[key], value2);
+  }
+  for (let key in obj2) {
     diff[key] = compareValues(obj1[key], obj2[key]);
-  });
-
+  }
   return toString(diff);
 };
+
+const compareValues = (value1, value2) => {
+  if (value1 === value2) {
+    return {
+      type: 'unchanged',
+      data: value1,
+    };
+  }
+  if (value1 === undefined) {
+    return {
+      type: 'created',
+      data: typeof value2 === 'object' ? objToString(value2) : value2,
+    };
+  }
+  if (value2 === undefined) {
+    return {
+      type: 'deleted',
+      data: typeof value1 === 'object' ? objToString(value1) : value1,
+    };
+  }
+  if (typeof value1 === 'object') {
+    return {
+      type: 'object',
+      data: differ(value1, value2),
+    };
+  }
+  return {
+    type: 'updated',
+    data: [value2, value1],
+  };
+};
+
+export default differ;
