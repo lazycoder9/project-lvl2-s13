@@ -21,20 +21,14 @@ const parseDeleted = (name, data, level) => `${_.repeat(' ', 4 * (level - 1))}  
 
 const parseUpdated = (name, data, level) => `${parseCreated(name, data[0], level)}\n${parseDeleted(name, data[1], level)}`;
 
-const iterDiffObject = (key, level) => {
-  switch (key.type) {
-    case 'object':
-      return parseObject(key.name, key.data, level);
-    case 'unchanged':
-      return parseUnchanged(key.name, key.data, level);
-    case 'created':
-      return parseCreated(key.name, key.data, level);
-    case 'deleted':
-      return parseDeleted(key.name, key.data, level);
-    case 'updated':
-      return parseUpdated(key.name, key.data, level);
-    default: break;
-  }
+const typeParser = {
+  object: parseObject,
+  unchanged: parseUnchanged,
+  created: parseCreated,
+  deleted: parseDeleted,
+  updated: parseUpdated,
 };
+
+const iterDiffObject = (key, level) => typeParser[key.type](key.name, key.data, level);
 
 export default diffObject => `{\n${diffObject.map(e => iterDiffObject(e, 1))}\n}`.split(',').join('\n');
