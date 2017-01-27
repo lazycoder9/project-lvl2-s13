@@ -4,8 +4,8 @@ const tab = n => _.repeat(' ', 4 * n);
 
 const dataCheck = (data, level) => {
   if (typeof data === 'object') {
-    const result = JSON.stringify(data, null, ' ');
-    return `{\n${tab(level + 1)}${result.split('\n').map(e => e.trim())[1]}\n${tab(level)}}`;
+    const result = JSON.stringify(data, ' ', 4);
+    return `{\n${tab(level)}${result.split('\n')[1]}\n${tab(level)}}`;
   }
   return data;
 };
