@@ -1,23 +1,24 @@
 import _ from 'lodash';
 
+const tab = n => _.repeat(' ', 4 * n);
+
 const dataCheck = (data, level) => {
   if (typeof data === 'object') {
-    const tabs = n => `\n${_.repeat(' ', 4 * n)}`
     const result = JSON.stringify(data, null, ' ');
-    return `{${tabs(level + 1)}${result.split('\n').map(e => e.trim())[1]}${tabs(level)}}`;
+    return `{\n${tab(level + 1)}${result.split('\n').map(e => e.trim())[1]}\n${tab(level)}}`;
   }
   return data;
 };
 
-const parseObject = (name, data, level) => `${_.repeat(' ', 4 * level)}${name}: {
+const parseObject = (name, data, level) => `${tab(level)}${name}: {
 ${data.map(e => iterDiffObject(e, level + 1))}
-${_.repeat(' ', 4 * (level))}}`;
+${tab(level)}}`;
 
-const parseUnchanged = (name, data, level) => `${_.repeat(' ', 4 * level)}${name}: ${dataCheck(data, level)}`;
+const parseUnchanged = (name, data, level) => `${tab(level)}${name}: ${dataCheck(data, level)}`;
 
-const parseCreated = (name, data, level) => `${_.repeat(' ', 4 * (level - 1))}  + ${name}: ${dataCheck(data, level)}`;
+const parseCreated = (name, data, level) => `${tab(level - 1)}  + ${name}: ${dataCheck(data, level)}`;
 
-const parseDeleted = (name, data, level) => `${_.repeat(' ', 4 * (level - 1))}  - ${name}: ${dataCheck(data, level)}`;
+const parseDeleted = (name, data, level) => `${tab(level - 1)}  - ${name}: ${dataCheck(data, level)}`;
 
 const parseUpdated = (name, data, level) => `${parseCreated(name, data[0], level)}\n${parseDeleted(name, data[1], level)}`;
 
