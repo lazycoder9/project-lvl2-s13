@@ -1,13 +1,12 @@
 import _ from 'lodash';
 
 const differ = (obj1, obj2) => {
-  const diff = [];
   const keys = _.union(_.keys(obj1), _.keys(obj2));
-  _.map(keys, (key) => {
+  return keys.reduce((acc, key) => {
     const { type, data } = compareValues(obj1[key], obj2[key]);
-    diff.push({ name: key, type, data });
-  });
-  return diff;
+    acc.push({ name: key, type, data });
+    return acc;
+  }, []);
 };
 
 const compareValues = (value1, value2) => {
