@@ -1,7 +1,7 @@
 {
   "name": "lazy-differ",
-  "version": "0.0.1",
-  "description": "[![Code Climate](https://codeclimate.com/github/ula9/js_l1_brain_games-s12/badges/gpa.svg)](https://codeclimate.com/github/ula9/js_l1_brain_games-s12)",
+  "version": "1.0.1",
+  "description": "[![Code Climate](https://codeclimate.com/github/lazycoder9/project-lvl2-s13/badges/gpa.svg)](https://codeclimate.com/github/lazycoder9/project-lvl2-s13)",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
   },
@@ -20,8 +20,11 @@
     "url": "git+https://github.com/lazycoder9/project-lvl2-s13.git"
   },
   "keywords": [
-    "brain",
-    "games"
+    "differ",
+    "config",
+    "json",
+    "yaml",
+    "ini"
   ],
   "author": "LazyCoder",
   "license": "ISC",

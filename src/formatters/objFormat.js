@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import chalk from 'chalk';
 
 const tab = n => _.repeat(' ', 4 * n);
 
@@ -16,11 +17,11 @@ ${tab(level)}}`;
 
 const parseUnchanged = (name, data, level) => `${tab(level)}${name}: ${dataCheck(data, level)}`;
 
-const parseCreated = (name, data, level) => `${tab(level - 1)}  + ${name}: ${dataCheck(data, level)}`;
+const parseCreated = (name, data, level) => chalk.green(`${tab(level)}${name}: ${dataCheck(data, level)}`);
 
-const parseDeleted = (name, data, level) => `${tab(level - 1)}  - ${name}: ${dataCheck(data, level)}`;
+const parseDeleted = (name, data, level) => chalk.red(`${tab(level)}${name}: ${dataCheck(data, level)}`);
 
-const parseUpdated = (name, data, level) => `${parseCreated(name, data[0], level)}\n${parseDeleted(name, data[1], level)}`;
+const parseUpdated = (name, data, level) => chalk.yellow(`${tab(level)}${name}: ${data[0]} => ${data[1]}`);
 
 const typeParser = {
   object: parseObject,

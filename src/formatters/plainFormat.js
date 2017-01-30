@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 const dataCheck = (data) => {
   if (typeof data === 'object') {
     return 'complex value';
@@ -11,11 +13,11 @@ const parseObject = (name, data) => data.map(e => `${iterDiffObject(e, name)}`);
 
 const parseUnchanged = () => '';
 
-const parseCreated = (name, data, parent = '') => `Property '${parentCheck(parent)}${name}' was added with ${dataCheck(data)}`;
+const parseCreated = (name, data, parent = '') => chalk.green(`Property '${parentCheck(parent)}${name}' was added with ${dataCheck(data)}`);
 
-const parseDeleted = (name, data, parent = '') => `Property '${parentCheck(parent)}${name}' was removed`;
+const parseDeleted = (name, data, parent = '') => chalk.red(`Property '${parentCheck(parent)}${name}' was removed`);
 
-const parseUpdated = (name, data, parent = '') => `Property '${parentCheck(parent)}${name}' was updated. From '${data[0]}' to '${data[1]}'`;
+const parseUpdated = (name, data, parent = '') => chalk.yellow(`Property '${parentCheck(parent)}${name}' was updated. From '${data[0]}' to '${data[1]}'`);
 
 const typeParser = {
   object: parseObject,
